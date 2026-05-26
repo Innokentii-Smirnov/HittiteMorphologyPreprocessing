@@ -1,0 +1,200 @@
+Cat
+	QUAN	NUM
+	adv
+	ADV
+	PREV	ADV
+	INTJ
+	CNJ		SCONJ
+	CNJadd	CCONJ
+	CNJdisj	CCONJ
+	CNJctr	CCONJ
+	CLFcas-np	ADP
+	PTC		PART
+	INDCL	INTJ
+NameType
+	DN		Deity
+	GN		Geo
+	PNm		Prs
+	PNf		Prs
+AdpType
+	PREP
+	POSP
+PronType
+	DEM
+	PPRO	Prs
+	INT
+	IND
+	INDF	Ind
+	QUAN	Tot
+	REL
+Reflex
+	REFL	Yes
+Poss
+	POSS	Yes
+	ADJG	Yes
+NumType
+	car		Card
+	dist
+	frac
+	mul		Mult
+	ord
+PartType
+	CONN
+	OBP		Loc
+ConnForm
+	a
+	n	nu
+	s	šu
+	t	ta
+LocPartForm
+	k	kkan
+	n	an
+	p	apa
+	s	ššan
+	st	ašta
+DeixisRef
+	REF1	1
+Deixis
+	1		Prox
+	2		Med
+	2/3		Med,Remt
+	3		Remt
+PronSem
+	any
+	oth
+	all
+	evr
+	2selb
+	ann
+PronForm
+	a		Accented
+Polarity
+	NEG
+Lang_init
+	PAL
+Lang_mid
+	HITT
+	LUW
+	LUW||HITT	LUW
+	LUW/HITT	LUW
+	HATT
+Lang
+	PAL
+	HITT
+	HURR
+	LUW
+	LUW||HITT	LUW
+	LUW/HITT	LUW
+	HATT
+Case
+	NOM
+	ACC
+	VOC
+	GEN
+	LOC
+	D/L		Dat,Loc
+	DAT/ACC	Dat,Acc
+	DAT
+	ALL
+	ABL
+	INS
+	ERG
+	ABS
+	ESS
+	OBL
+	STF		_
+	GENunh	Gen
+	DIR
+	ABS
+	NOM/ACC	Nom,Acc
+	ABL/INS	Abl,Ins
+	N/A		Nom,Acc
+	A/I		Abl,Ins
+	?		<UNK>
+Number
+	PL		Plur
+	SG		Sing
+	COLL
+Gender
+	M	Masc
+	F	Fem
+	N	Neut
+	C	Com
+Person
+	1
+	2
+	3
+	4
+Tense
+	PRS		Pres
+	PST		Past
+Aspect
+	IMPF	Imp
+Mood
+	IMP
+	IND
+	SBJV	Sub
+	IRR
+	QUOT	QOT
+Voice
+	PASS
+	MP		Mid
+	ACT
+VerbForm
+	PTCP		Part
+	PTCP.INDCL	Part
+	VBN			Vnoun
+	INF
+	SUP
+Definiteness
+	RLT		Def
+Posessor
+	PRON
+	SPRO
+Focus
+	FOC	Yes
+Definiteness_ext
+Number_ext
+Case_ext
+Person_psor
+Number_psor
+Case_psor
+Patterns
+	(Lang_init.)?(CatNumType?.|NameType.)?(Lang_mid.)?(PronType(PronSem|Deixis)?.)?(Poss.)?Case(.Number)?(.Gender)?
+	~(Lang.)?PronTypePronForm?(.PersonNumber)?.Case
+	PronType:PPRO.Person:3Number.Gender.Case:NOM|ACC
+	PronType:PPRO.Person:3Number.Case:GEN|D/L
+	PronType:PPROPronForm:a.Person:1|2Number.Case:NOM|GEN|DAT/ACC
+	PronType:PPRO.Person:1|2Number.Case:ACC|DAT
+	~PronType:PPRO.Person:1|2Number.Case:GEN
+	Lang:PAL.PronType:PPRO.PersonNumber.Gender.Case:NOM|DAT
+	PronType:PPRO.PersonNumber.Gender.Case:DAT
+	(Lang.)?PersonNumber.(Mood|Tense)(.Voice)?(.Aspect)?
+	(Lang.)?(Aspect.)?VerbForm(.Case(.Number)?(.Gender)?)?
+	CatNumType?
+	(Lang.)?Polarity
+	(Lang.)?PronType?Cat
+	Lang_init.Cat
+	Cat.Lang_mid
+	Lang
+	Reflex
+	Poss.PersonNumber.Case
+	Poss.PersonNumber.UNIV
+	Poss.Person_psorNumber_psor.Case:NOM|ACC.Number.Gender
+	Poss.Person_psorNumber_psor.Case:GEN|D/L|VOC.Number
+	Poss.Person_psorNumber_psor.UNIV.Number
+	AdpType
+	Mood:QUOT
+	DeixisRef
+	(Lang.)?PartType:CONNConnForm?
+	PartType:OBP(LocPartForm)?
+	(Lang:PAL.)?Mood:IRR
+	Focus
+	NameType:DN.Lang:HATT
+	(NameType.)?Lang:HURR.Definiteness.Number.Case.Definiteness_ext.Number_ext.Case_ext
+	(NameType.)?Lang:HURR.Definiteness.Number(.Case)?.Case_ext.Number_ext
+	(NameType.)?Lang:HURR.Definiteness.Number(.Case)?
+	(NameType.)?Lang:HURR.Case(.Number)?.Definiteness_ext.Number_ext(.Case_ext)?
+	(NameType.)?Lang:HURR.Number.Case.Case_ext.Number_ext
+	(NameType.)?Lang:HURR.Case(.Number)?
+	(NameType.)?Lang:HURR(.Number)?(.Case)?.Posessor.Person_psorNumber_psor(.Case_psor)?

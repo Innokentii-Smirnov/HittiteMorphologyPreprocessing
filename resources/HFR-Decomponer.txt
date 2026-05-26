@@ -1,0 +1,13 @@
+pos = DN GN PNm PNf ADJG CNJ PREP POSP ADV PREV PRO DEM
+case = NOM ACC VOC GEN D/L ALL ABL INS
+num = SG PL
+gend = C N
+pers = 1 2 3
+tense = PRS PST
+asp = IMPF
+voice = MP
+mood = IMP
+verbform = PTCP PTCP.INDCL VBN INF SUP
+(<pos>.)?<case>(.<num>)?(.<gend>)?
+<pers><num>.(<mood>|<tense>)(.<voice>)?(.<asp>)?
+(<asp>.)?(<voice>.)?<verbform>

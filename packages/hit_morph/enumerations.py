@@ -1,0 +1,35 @@
+from enum import Enum, auto
+
+class Lang(Enum):
+    hit = auto()
+    akk = auto()
+    sux = auto()
+    xht = auto()
+    xhu = auto()
+    xlu = auto()
+    plq = auto()
+
+class Pos(Enum):
+    ADJ = auto()
+    ADV = auto()
+    INTJ = auto()
+    NOUN = auto()
+    PROPN = auto()
+    DN = auto()
+    GN = auto()
+    PNm = auto()
+    PNf = auto()
+    VERB = auto()
+    ADP = auto()
+    AUX = auto()
+    CCONJ = auto()
+    DET = auto()
+    NUM = auto()
+    PART = auto()
+    PRON = auto()
+    SCONJ = auto()
+    X = auto()
+    DEM = auto()
+    INDF = auto()
+    QUAN = auto()
+

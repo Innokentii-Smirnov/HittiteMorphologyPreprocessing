@@ -1,0 +1,21 @@
+ nadi@(u.B.):PAL.CONN=PTC=OBP=(u.B.):PAL.3SG.PRS@	nadi@(u.B.):PAL.CONN=PTC=OBP || (u.B.):PAL.3SG.PRS@
+/ALAM=i-@Statue@{a → D/L.SG_vor:POSP}@28.2.1.2.1@	ALAM=i-@Statue@{a → …:D/L.SG_vor:POSP}@28.2.1.2.1@
+/EGIR˽IG@Tür@D/L_hinter:POSP@Tür:D/L_hinter:POSP@	EGIR˽IG@Tür@…:D/L_hinter:POSP@@
+/ŠU°MEŠ°-ŠU-NU@Hand@{d → ACC.PL_DEM2/3.GEN.PL(UNM)}@@	ŠU°MEŠ°-ŠU-NU@Hand@{d → ACC.PL(UNM)_DEM2/3.GEN.PL}@@
+kunna=@rechts@{a → ACC.SG.N}@28.1.1.1.1 += ma=aš=šši=kkan@{R → CNJctr=PPRO.3SG.D/L=OBPk}@	kunna=@rechts@{a → ACC.SG.N}@28.1.1.1.1 += ma=aš=šši=kkan@{R → CNJctr=PPRO.3SG.D/L=OBPk}@
+DINGIR-LIM@Gott@{a → D/L.SG_vor:POSP(UNM)}@@	DINGIR-LIM@Gott@{a → D/L.SG(UNM)_vor:POSP}@@
+GUNNI=@Herd@{b → ACC.SG}@28.19 += kkan@PPRO.3SG.C.ACC=OBPk@@	GUNNI=@Herd@{b → ACC.SG}@28.19 += an=kkan@PPRO.3SG.C.ACC=OBPk@@
+ZABABA@DN.HITT.GEN.SG@DN@@D	ZABABA@@DN.HITT.GEN.SG@@D
+anda@darin@@ADV += ma=an@OBPn@	anda@darin@@ADV += ma=an@CNJctr=OBPn@
+anda@hinein-@@PREV += ma=an@OBPn@	anda@hinein-@@PREV += ma=an@CNJctr=OBPn@
+appa@wieder@@ADV += ššetta@{R → POSS.3SG.NOM.SG.N=CNJadd}{S → POSS.3SG.ACC.SG.N=CNJadd}{T → POSS.3SG.ABL=CNJadd}{U → POSS.3SG.INS=CNJadd}{V → POSS.3SG.UNIV.SG=CNJad}@NOM|N=CNJadd|ACC|N=CNJadd|ABL=CNJadd|INS=CNJadd|UNIV|=CNJad@	appa@wieder@@ADV += ššet=ya@{R → POSS.3SG.NOM.SG.N=CNJadd}{S → POSS.3SG.ACC.SG.N=CNJadd}{T → POSS.3SG.ABL=CNJadd}{U → POSS.3SG.INS=CNJadd}{V → POSS.3SG.UNIV.SG=CNJad}@NOM|N=CNJadd|ACC|N=CNJadd|ABL=CNJadd|INS=CNJadd|UNIV|=CNJad@
+appan=šamet@hinter:POSP=POSS.3PL.UNIV@hinter:ADV=POSS.3PL.UNIV@@	appan=šamet@@hinter:POSP=POSS.3PL.UNIV@@
+appan=šamit@hinter:POSP=POSS.3PL.UNIV@hinter:ADV=POSS.3PL.UNIV@@	appan=šamit@@hinter:POSP=POSS.3PL.UNIV@@
+appan=šit@hinter:POSP=POSS.3SG.UNIV@hinter:ADV=POSS.3SG.UNIV@@	appan=šit@@hinter:POSP=POSS.3SG.UNIV@@
+appan=šit@hinter:POSP=POSS.3SG.UNIV@hinter:ADV=POSS.3SG.UNIV@@+= ya@CNJadd@	appan=šit@@hinter:POSP=POSS.3SG.UNIV@@+= ya@CNJadd@
+n=at=šši=kan@@{a → CONNn=PPRO.3SG.N.NOM=PPRO.3SG.D/L=OPBk}{b → CONNn=PPRO.3SG.N.ACC=PPRO.3SG.D/L=OPBk}{c → PTC.PPRO.3PL.N.NOM.=PPRO.3SG.D/L=OPBk}{d → PTC.PPRO.3PL.N.ACC.=PPRO.3SG.D/L=OPBk}{e → CONNn=PPRO.3PL.C.NOM=PPRO.3SG.D/L=OPBk}@@	n=at=šši=kan@@{a → CONNn=PPRO.3SG.N.NOM=PPRO.3SG.D/L=OPBk}{b → CONNn=PPRO.3SG.N.ACC=PPRO.3SG.D/L=OPBk}{c → CONNn=PPRO.3PL.N.NOM=PPRO.3SG.D/L=OPBk}{d → CONNn=PPRO.3PL.N.ACC=PPRO.3SG.D/L=OPBk}{e → CONNn=PPRO.3PL.C.NOM=PPRO.3SG.D/L=OPBk}@@
+nadi@(u.B.):PAL.CONN=PTC=OBP=(u.B.):PAL.3SG.PRS@	nadi@(u.B.):PAL.CONN=PTC=OBP || (u.B.):PAL.3SG.PRS@
+nu=šši-kan@@CONNn=PPRO.3SG.D/L=OBPk@@	nu=šši=kan@@CONNn=PPRO.3SG.D/L=OBPk@@
+zarzu=r-@Zusammensetzung@{a → NOM.SG.N}@10.1.2.2 += ššetta@{R → POSS.3SG.NOM.SG.N=CNJadd}@NOM|N=CNJadd|ACC|N=CNJadd|ABL=CNJadd|INS=CNJadd|UNIV|=CNJad@	zarzu=r-@Zusammensetzung@{a → NOM.SG.N}@10.1.2.2 += ššet=ya@{R → POSS.3SG.NOM.SG.N=CNJadd}@NOM|N=CNJadd|ACC|N=CNJadd|ABL=CNJadd|INS=CNJadd|UNIV|=CNJad@
+­­‌­DAG=tt-@Thron@{a → D/L.SG_vor:POSP}@28.12.1@GIŠ	DAG=tt-@Thron@{a → D/L.SG_vor:POSP}@28.12.1@GIŠ
+ḫinapešḫur@(u.B.):PAL.ACC.SG.C=PTC=PTC=Blut:PAL.ACC.SG.N@	ḫinapešḫur@(u.B.):PAL.ACC.SG.C=PTC=PTC || Blut:PAL.ACC.SG.N@

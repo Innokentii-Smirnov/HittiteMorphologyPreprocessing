@@ -1,0 +1,4 @@
+noun	<case>(.<num>)?
+adj	<case>(.<num>)?(.<gend>)?
+verb	<pers><num>.(<mood>|<tense>)(.<voice>)?(.<asp>)?
+verb	(<asp>.)?(<voice>.)?<verbform>

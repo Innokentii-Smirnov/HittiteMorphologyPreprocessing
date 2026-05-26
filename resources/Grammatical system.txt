@@ -1,0 +1,16 @@
+case = nom acc voc gen d/l all abl ins
+num = sg pl
+gend = c n
+pers = 1 2 3
+tense = prs pst
+asp = _pfv impf
+voice = _act mp
+mood = _ind imp
+verbform = _fin ptcp vbn inf sup
+noun: case num
+adj: case num ~gend
+verb: verbform ~pers ~num ~mood ~tense voice asp
+nom | acc -> gend
+abl | ins | all -/-> num
+imp -/-> tense
+_fin -> pers | num | mood | tense
