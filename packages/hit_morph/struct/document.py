@@ -3,11 +3,15 @@ from .clitic_complex import CliticComplex
 from .morpholex import Morpholex
 from .encl_chain import EnclChain
 from .sentence import Sentence
+from itertools import groupby
 from collections import Counter
 from library.serializable import SerializableList
 from itertools import chain
 from numpy import inf
 from tqdm.auto import tqdm
+from more_itertools import one
+from udapi.core.document import Document as UDDocument
+from udapi.core.node import Node
 from library.iterable import group_by
 
 class Document(SerializableList):
@@ -89,3 +93,21 @@ class Document(SerializableList):
             total
         ))
         return errors
+
+    def to_ud_document(self) -> UDDocument:
+      document = UDDocument()
+      for sentence in self:
+        root = document.create_bundle().create_tree()
+        for key, group in groupby(sentence.segments, lambda segment: segment.idx):
+          segments = list(group)
+          if len(segments) > 1:
+            words = list[Node]()
+            for segment in segments:
+              node = root.create_child(form=segment.exponent or '_', misc=segment.misc)
+              words.append(node)
+            mwt_form = ' '.join(node.form for node in words)
+            mwt = root.create_multiword_token(words, mwt_form)
+          else:
+            segment = one(segments)
+            node = root.create_child(form=segment.exponent or '_', misc=segment.misc)
+      return document

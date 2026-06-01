@@ -319,3 +319,12 @@ class Segment(Serializable):
     @property
     def possible_lemmata(self) -> set[str]:
         return set(analysis.morpholex.lemma for analysis in self.new_options.values())
+
+    @property
+    def misc(self) -> dict[str, str]:
+      misc = dict[str, str]()
+      if self.predet is not None:
+        misc['Det'] = self.predet
+      if self.postdet is not None:
+        misc['Postdet'] = self.postdet
+      return misc
