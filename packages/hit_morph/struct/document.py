@@ -58,10 +58,10 @@ class Document(SerializableList):
                     segment.final_lemma = None
                     segment.final_label = None
     
-    def eval_lemmata(self, all_segments: bool = False) -> Counter[tuple[str, str, str]]:
+    def eval_lemmata(self, all_segments: bool = False) -> Counter[tuple[str, str | None, str | None]]:
         corr_lemma = 0
         total = 0
-        errors = Counter[tuple[str, str, str]]()
+        errors = Counter[tuple[str, str | None, str | None]]()
         for segment in self.segments:
             if not segment.text.isdigit() and segment.lemma is not None or all_segments:
                 if segment.final_lemma == segment.lemma:
@@ -76,10 +76,10 @@ class Document(SerializableList):
         ))
         return errors
     
-    def eval_labels(self, all_segments: bool = False) -> Counter[tuple[str, str, str]]:
+    def eval_labels(self, all_segments: bool = False) -> Counter[tuple[str, str | None, str]]:
         corr_label = 0
         total = 0
-        errors = Counter[tuple[str, str, str]]()
+        errors = Counter[tuple[str, str | None, str]]()
         for segment in self.segments:
             if not segment.text.isdigit() or all_segments:
                 if segment.final_label == segment.label:

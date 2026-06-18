@@ -82,7 +82,6 @@ class Sentence(Serializable):
                 segments.append(segment)
             except:
                 print(metadata)
-                print(checked)
                 print()
                 for key, value in tag.attrs.items():
                     print("{0:10} '{1}'".format(key, value))

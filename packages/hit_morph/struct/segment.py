@@ -1,3 +1,4 @@
+from __future__ import annotations
 from itertools import chain
 from typing import Optional, Sequence, TYPE_CHECKING
 from bs4 import Tag
@@ -12,9 +13,7 @@ from .encl_chain import EnclChain
 from .selection import Selection, SelectionList
 from gen_morph.exceptions import CannotParseSelection
 if TYPE_CHECKING:
-  from .sentence import Sentence
-
-missing = set()
+  from .sentence import Sentence, SentenceMetadata
 
 def get_lang(trans: Tag) -> str:
     if (l := trans.sGr) is not None and l.text != '':
@@ -295,7 +294,7 @@ class Segment(Serializable):
         return self.first.label
     
     @property
-    def lemma(self) -> str:
+    def lemma(self) -> str | None:
         return self.first.morpholex.lemma
     
     @property
@@ -303,7 +302,7 @@ class Segment(Serializable):
         return set(analysis.label for analysis in self.correct)
     
     @property
-    def lemmata(self) -> set[str]:
+    def lemmata(self) -> set[str | None]:
         return set(analysis.morpholex.lemma for analysis in self.correct)
     
     @property
@@ -332,7 +331,7 @@ class Segment(Serializable):
             return None
 
     @property
-    def possible_lemmata(self) -> set[str]:
+    def possible_lemmata(self) -> set[str | None]:
         return set(analysis.morpholex.lemma for analysis in self.new_options.values())
 
     @property
@@ -343,3 +342,5 @@ class Segment(Serializable):
       if self.postdet is not None:
         misc['Postdet'] = self.postdet
       return misc
+
+missing = set[tuple[Segment, SentenceMetadata]]()
