@@ -1,4 +1,5 @@
 from typing import Sequence
+from numpy import ndarray
 from library.serializable import Serializable, SerializableDict
 from .morpholex import Morpholex
 from .encl_chain import EnclChain
@@ -8,7 +9,7 @@ from .selection import Selection
 class CliticComplex(Serializable):
     sep = '\t'
 
-    def get_elements(self) -> tuple[Morpholex, EnclChain]:
+    def get_elements(self) -> tuple[Morpholex, EnclChain | None]:
         return self.morpholex, self.encl_chain
 
     @classmethod
@@ -18,7 +19,7 @@ class CliticComplex(Serializable):
             EnclChain.from_string(encl_chain) if encl_chain is not None else None
         )
     
-    def __init__(self, morpholex: Morpholex, encl_chain: EnclChain):
+    def __init__(self, morpholex: Morpholex, encl_chain: EnclChain | None):
         self.morpholex = morpholex
         self.encl_chain = encl_chain
         self.morpholex.clitic_complex = self
@@ -37,7 +38,7 @@ class CliticComplex(Serializable):
             'simple_label': self.morpholex.simple_label
         }
     
-    def score(self, log_probs_dict: dict[str, Sequence[float]], vocabs: dict[str, dict[str, int]]) -> float:
+    def score(self, log_probs_dict: dict[str, ndarray], vocabs: dict[str, dict[str, int]]) -> float:
         score = 0.0
         for attr in log_probs_dict:
             value = self.attrs[attr]
@@ -55,24 +56,24 @@ class CliticComplex(Serializable):
         morpholex, encl_chain = parse_analysis(analysis)
         return cls(morpholex, encl_chain)
 
-    def select_gramm_form(self, selection: str | None):
-        self.morpholex.select_gramm_form(selection)
-
-    def select_encl_chain(self, selection: str | None):
-        if self.encl_chain is None:
-            assert selection is None, 'This wordform has no enclitic chain.'
-        else:
-            self.encl_chain.select_tags(selection)
+    # def select_gramm_form(self, selection: str | None):
+    #     self.morpholex.select_gramm_form(selection)
+    #
+    # def select_encl_chain(self, selection: str | None):
+    #     if self.encl_chain is None:
+    #         assert selection is None, 'This wordform has no enclitic chain.'
+    #     else:
+    #         self.encl_chain.select_tags(selection)
     
     @property
     def label(self) -> str:
         label = self.morpholex.label
-        if self.encl_chain is not None:
+        if self.encl_chain is not None and self.encl_chain.tags is not None:
             label = '='.join([label, self.encl_chain.tags])
         return label
     
     @property
-    def elements(self) -> tuple[Morpholex, EnclChain]:
+    def elements(self) -> tuple[Morpholex, EnclChain | None]:
         return self.morpholex, self.encl_chain
 
     @property
@@ -82,16 +83,16 @@ class CliticComplex(Serializable):
             tags.append(self.morpholex.attached_enclitics_tag)
         if self.morpholex.relators is not None:
             tags.append(self.morpholex.relators.replace('.RLT', '=RLT'))
-        if self.encl_chain is not None:
+        if self.encl_chain is not None and self.encl_chain.tags is not None:
             tags.append(self.encl_chain.tags)
         if len(tags) > 0:
             return '='.join(tags)
         else:
             return None
 
-class CliticComplexDict(SerializableDict):
+class CliticComplexDict(SerializableDict[str | None, CliticComplex]):
     sep = '\n'
-    get_key = lambda x: x
+    get_key = lambda string: string
     get_value = CliticComplex.from_string
 
 

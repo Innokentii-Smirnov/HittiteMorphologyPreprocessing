@@ -1,3 +1,4 @@
+from __future__ import annotations
 from library.read import read_text
 from library.write import write_text
 from typing import TypeVar, Sequence
@@ -11,9 +12,14 @@ def to_string(x):
     else:
         return repr(x)
 
-class Serializable:
+def from_string(string: str) -> str | None:
+  if string == 'None':
+    return None
+  return string
 
-    element_func = lambda x: x if x is x != 'None' else None
+class BasicSerializable:
+
+    element_func = lambda x: x if x != 'None' else None
     sep = '%'
 
     def get_elements(self) -> Sequence:
@@ -30,9 +36,6 @@ class Serializable:
 
     def __gt__(self, other) -> bool:
         return self.__tuple__().__gt__(other.__tuple__())
-
-    def __hash__(self):
-        return self.__tuple__().__hash__()
 
     @classmethod
     def from_strings(cls, *strings):
@@ -54,13 +57,18 @@ class Serializable:
     @classmethod
     def load(cls, filename: str):
         return cls.from_string(read_text(filename))
+
+class Serializable(BasicSerializable):
+
+    def __hash__(self):
+        return self.__tuple__().__hash__()
     
 T = TypeVar('T')
 
-class SerializableList(Serializable, list[T]):
+class SerializableList[T](BasicSerializable, list[T]):
     
-    @classmethod
-    def get_element(cls, string: str) -> T:
+    @staticmethod
+    def get_element(string: str) -> T:
         raise NotImplementedError
 
     def get_elements(self) -> Sequence[T]:
@@ -73,16 +81,16 @@ class SerializableList(Serializable, list[T]):
 TKey = TypeVar('TKey')
 TValue = TypeVar('TValue')
 
-class SerializableDict(Serializable, dict[TKey, TValue]):
+class SerializableDict[TKey, TValue](BasicSerializable, dict[TKey, TValue]):
     separator = ' \u2192 '
     sep = ' \u222a '
 
-    @classmethod
-    def get_key(cls, string: str) -> TKey:
+    @staticmethod
+    def get_key(string: str) -> TKey:
         raise NotImplementedError
     
-    @classmethod
-    def get_value(cls, string: str) -> TValue:
+    @staticmethod
+    def get_value(string: str) -> TValue:
         raise NotImplementedError
     
     def get_elements(self) -> Sequence[str]:
@@ -90,7 +98,7 @@ class SerializableDict(Serializable, dict[TKey, TValue]):
 
     @classmethod
     def from_string(cls, string: str):
-        d = cls()
+        d: SerializableDict = cls()
         if string != '':
             for elem in string.split(cls.sep):
                 str_key, str_value = elem.split(cls.separator, 1)
@@ -99,13 +107,20 @@ class SerializableDict(Serializable, dict[TKey, TValue]):
                 d[key] = value
         return d
 
-class StringList(SerializableList):
+class StringList(SerializableList[str | None]):
 
-    get_element = str
+    @staticmethod
+    def get_element(string: str) -> str | None:
+      return from_string(string)
 
-class StringStringDict(SerializableDict):
+class StringStringDict(SerializableDict[str | None, str | None]):
 
-    get_key = str
-    get_value = str
+    @staticmethod
+    def get_key(string: str) -> str | None:
+      return from_string(string)
+
+    @staticmethod
+    def get_value(string: str) -> str | None:
+      return from_string(string)
 
         

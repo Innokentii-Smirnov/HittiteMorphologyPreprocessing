@@ -32,11 +32,19 @@ class SentenceMetadata(Serializable):
     
     @classmethod
     def from_tag(cls, sent_tag: Tag):
+        text_group = sent_tag['text_group']
+        assert isinstance(text_group, str)
+        text_name = sent_tag['text_name']
+        assert isinstance(text_name, str)
+        lines = sent_tag['lines']
+        assert isinstance(lines, str)
+        lang = sent_tag['langs']
+        assert isinstance(lang, str)
         metadata = cls(
-            sent_tag['text_group'],
-            sent_tag['text_name'],
-            sent_tag['lines'],
-            sent_tag['langs']
+            text_group,
+            text_name,
+            lines,
+            lang
         )
         return metadata
     

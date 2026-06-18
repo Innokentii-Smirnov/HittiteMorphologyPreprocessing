@@ -1,5 +1,5 @@
 from itertools import chain
-from typing import Optional, Sequence
+from typing import Optional, Sequence, TYPE_CHECKING
 from bs4 import Tag
 from warnings import warn
 from gen_morph.exceptions import CannotParseWordform
@@ -11,6 +11,8 @@ from .morpholex import Morpholex
 from .encl_chain import EnclChain
 from .selection import Selection, SelectionList
 from gen_morph.exceptions import CannotParseSelection
+if TYPE_CHECKING:
+  from .sentence import Sentence
 
 missing = set()
 
@@ -27,6 +29,7 @@ def get_options(wordform: Tag, prefix: str) -> CliticComplexDict:
     for key, value in wordform.attrs.items():
         if key.startswith(prefix) and key != prefix + '0sel':
             lemma_idx = int(key.removeprefix(prefix))
+            assert isinstance(value, str)
             clitic_complex = CliticComplex.from_analysis(value)
             gramm_forms = inflecting.parse_form(clitic_complex.morpholex.gramm_form)
             if clitic_complex.encl_chain is not None:
@@ -47,7 +50,11 @@ def get_options(wordform: Tag, prefix: str) -> CliticComplexDict:
 def get_selections(wordform: Tag, prefix: str) -> StringList:
     selections = StringList()
     key = prefix +'0sel'
-    if key in wordform.attrs and (str_selections := wordform[key].strip()) != '':
+    if key in wordform.attrs:
+      str_selections = wordform[key]
+      assert isinstance(str_selections, str)
+      str_selections = str_selections.strip()
+      if str_selections != '':
         for selected in str_selections.split():
             try:
                 selection = Selection.parse_string(selected)
@@ -65,7 +72,7 @@ from typing import TypeVar
 from itertools import chain
 TKey = TypeVar('TKey')
 TValue = TypeVar('TValue')
-class DoubleDictionary:
+class DoubleDictionary[TKey, TValue]:
     def __init__(self, d1: dict[TKey, TValue], d2: dict[TKey, TValue]):
         self.d1 = d1
         self.d2 = d2
@@ -99,9 +106,13 @@ class DoubleDictionary:
 
 class Segment(Serializable):
     sep = ';\n'
+    sentence: Sentence
 
-    def get_elements(self) -> tuple[str, str, str, Optional[str], Optional[str], CliticComplexDict, int, SelectionList,
-    Optional[str], Optional[str], Selection]:
+    def get_elements(self) -> tuple[str, str, str, Optional[str], Optional[str], StringList,
+                                    CliticComplexDict, int, str, StringList, CliticComplexDict,
+                                    Optional[str], Optional[str], StringList,
+                                    Optional[str], Optional[str], StringList,
+                                    StringList]:
         return (self.exponent, self.translit, self.lang, self.predet, self.postdet,
         self.old_selections, self.old_options, self.idx,
         self.new_trans, self.new_selections, self.new_options,
@@ -201,10 +212,14 @@ class Segment(Serializable):
 
         # Exponent
         transcription = wordform.attrs.get('trans', '_')
+        assert isinstance(transcription, str)
         transliteration = parse_transliteration(wordform.children)
         lang = get_lang(wordform)
-        idx = int(wordform.attrs['idx'])
+        str_idx = wordform.attrs['idx']
+        assert isinstance(str_idx, str)
+        idx = int(str_idx)
         new_trans = wordform.attrs.get('trans', '_')
+        assert isinstance(new_trans, str)
 
         # Morphological representations
         old_options = get_options(wordform, 'opt')

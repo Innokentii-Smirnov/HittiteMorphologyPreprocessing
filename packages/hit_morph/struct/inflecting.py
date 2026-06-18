@@ -12,8 +12,7 @@ def parse_form(form: str | None) -> StringStringDict:
     if form is not None and (form.startswith('{') != form.endswith('}')):
         raise CannotParseFormSet(form)
 
-    ambiguous = form is not None and in_braces(form)
-    if ambiguous:
+    if form is not None and in_braces(form):
         forms = StringStringDict()
         spl = sep.split(debrace(form))
         for x in spl:

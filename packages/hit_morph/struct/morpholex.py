@@ -1,13 +1,23 @@
+from typing import Optional, TYPE_CHECKING
 from library.serializable import Serializable
+if TYPE_CHECKING:
+  from .segment import Segment
+  from .clitic_complex import CliticComplex
 String = str | None
 
 class Morpholex(Serializable):
     sep = '@'
+    segment: 'Segment'
+    clitic_complex: 'CliticComplex'
 
-    def __init__(self, lemma: str, gloss: str, gramm_form: str, stem_class: str, det: str, upos: str,
-                 relators: str = None,
-                 attached_enclitics_tag: str = None,
-                 exponent: str = None):
+    def __init__(self, lemma: str, gloss: str,
+                 gramm_form: str | None,
+                 stem_class: str | None,
+                 det: str | None,
+                 upos: str | None,
+                 relators: Optional[str] = None,
+                 attached_enclitics_tag: Optional[str] = None,
+                 exponent: Optional[str] = None):
         self.lemma = lemma if lemma != '' else None
         self.gloss = gloss if gloss != '' else None
         self.gramm_form = gramm_form if gramm_form != '' else None
@@ -21,7 +31,7 @@ class Morpholex(Serializable):
         return
     
     @classmethod
-    def copy(cls, other, gramm_form: str):
+    def copy(cls, other, gramm_form: str | None):
         return cls(other.lemma, other.gloss, gramm_form, other.stem_class, other.det, other.upos,
         other.relators, other.attached_enclitics_tag, other._exponent)
     
@@ -33,7 +43,9 @@ class Morpholex(Serializable):
     @classmethod
     def from_strings(cls, lemma: str, gloss: str, gramm_form: str,
                      stem_class: str, det: str, upos: str,
-                     relators: str = None, attached_enclitics_tag: str = None, exponent: str = None):
+                     relators: Optional[str] = None,
+                     attached_enclitics_tag: Optional[str] = None,
+                     exponent: Optional[str] = None):
         return cls(lemma, gloss, gramm_form, stem_class, det, upos, relators, attached_enclitics_tag, exponent)
 
     @property
