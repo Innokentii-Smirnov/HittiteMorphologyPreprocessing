@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Iterable
 import re
 from gen_morph.exceptions import CannotParseSelection
 from library.serializable import Serializable, SerializableList
@@ -12,7 +13,9 @@ class Selection(Serializable):
         return self.lexeme, self.gramm_form, self.encl_chain
 
     @classmethod
-    def from_strings(cls, lexeme: str, gramm_form: str, encl_chain: str) -> Selection:
+    def from_strings(cls, strings: Iterable[str | None]) -> Selection:
+        lexeme, gramm_form, encl_chain = strings
+        assert isinstance(lexeme, str)
         return cls(int(lexeme), gramm_form, encl_chain)
 
     def __init__(self, lexeme: int, gramm_form: String, encl_chain: String):
@@ -25,7 +28,7 @@ class Selection(Serializable):
         matched = cls.selection_pattern.fullmatch(selection)
         if matched is not None:
             lexeme, gramm_form, encl_chain = matched.groups()
-            return cls.from_strings(lexeme, gramm_form, encl_chain)
+            return cls(int(lexeme), gramm_form, encl_chain)
         else:
             raise CannotParseSelection(selection)
     

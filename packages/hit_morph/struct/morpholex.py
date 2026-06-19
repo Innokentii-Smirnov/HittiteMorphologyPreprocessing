@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING, Iterable
 from library.serializable import Serializable
 if TYPE_CHECKING:
   from .segment import Segment
@@ -44,11 +44,9 @@ class Morpholex(Serializable):
                 self._exponent)
     
     @classmethod
-    def from_strings(cls, lemma: str, gloss: str, gramm_form: str,
-                     stem_class: str, det: str, upos: str,
-                     relators: Optional[str] = None,
-                     attached_enclitics_tag: Optional[str] = None,
-                     exponent: Optional[str] = None) -> Morpholex:
+    def from_strings(cls, strings: Iterable[str | None]) -> Morpholex:
+        (lemma, gloss, gramm_form, stem_class, det, upos,
+        relators, attached_enclitics_tag, exponent) = strings
         return cls(lemma, gloss, gramm_form, stem_class, det, upos, relators, attached_enclitics_tag, exponent)
 
     @property

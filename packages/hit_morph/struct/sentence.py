@@ -23,7 +23,12 @@ class SentenceMetadata(Serializable):
         return self.text_group, self.text_name, self.lines, self.langs
     
     @classmethod
-    def from_strings(cls, text_group: str, text_name: str, lines: str, langs: str) -> SentenceMetadata:
+    def from_strings(cls, strings: Iterable[str | None]) -> SentenceMetadata:
+        text_group, text_name, lines, langs = strings
+        assert isinstance(text_group, str)
+        assert isinstance(text_name, str)
+        assert isinstance(lines, str)
+        assert isinstance(langs, str)
         return cls(text_group, text_name, lines, langs)
     
     def __init__(self, text_group: str, text_name: str, lines: str, langs: str):
@@ -60,7 +65,10 @@ class Sentence(Serializable):
         return self.metadata, self.segments
     
     @classmethod
-    def from_strings(cls, metadata: str, segments: str) -> Sentence:
+    def from_strings(cls, strings: Iterable[str | None]) -> Sentence:
+        metadata, segments = strings
+        assert isinstance(metadata, str)
+        assert isinstance(segments, str)
         return cls(SentenceMetadata.from_string(metadata), SegmentList.from_string(segments))
 
     def assign_numbers_to_segments(self) -> None:

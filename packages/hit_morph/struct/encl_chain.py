@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterable
 from library.serializable import Serializable
 from gen_morph.exceptions import CannotParseEnclChain
 from collections.abc import Iterator
@@ -17,7 +17,8 @@ class EnclChain(Serializable):
         return self.exponents, self.tags
 
     @classmethod
-    def from_strings(cls, exponents: str, tags: str) -> EnclChain:
+    def from_strings(cls, strings: Iterable[str | None]) -> EnclChain:
+        exponents, tags = strings
         return cls(exponents, tags, None)
 
     def __init__(self, exponents: str | None, tags: str | None, other_tags: str | None):

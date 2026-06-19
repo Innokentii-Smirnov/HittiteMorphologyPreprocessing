@@ -38,7 +38,9 @@ class Inflecting(Serializable):
         return self.gramm_forms,
 
     @classmethod
-    def from_strings(cls, gramm_forms: str) -> Inflecting:
+    def from_strings(cls, strings: Iterable[str | None]) -> Inflecting:
+        gramm_forms, = strings
+        assert isinstance(gramm_forms, str)
         return cls(StringStringDict.from_string(gramm_forms))
     
     # def compute(self) -> None:

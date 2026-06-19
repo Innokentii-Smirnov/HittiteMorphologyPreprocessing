@@ -1,7 +1,7 @@
 from __future__ import annotations
 from library.read import read_text
 from library.write import write_text
-from typing import TypeVar, Sequence, Type
+from typing import TypeVar, Sequence, Type, Iterable
 from functools import partial
 
 def to_string(x: object) -> str:
@@ -21,7 +21,12 @@ TSerializable = TypeVar('TSerializable', bound='BasicSerializable')
 
 class BasicSerializable:
 
-    element_func = lambda x: x if x != 'None' else None
+    @staticmethod
+    def element_func(x: str) -> str | None:
+        if x == 'None':
+            return None
+        return x
+
     sep = '%'
 
     def get_elements(self) -> Sequence:
@@ -46,7 +51,7 @@ class BasicSerializable:
         return False
 
     @classmethod
-    def from_strings(cls: Type[TSerializable], *strings) -> TSerializable:
+    def from_strings(cls: Type[TSerializable], strings: Iterable[str | None]) -> TSerializable:
         raise NotImplementedError
 
     def to_string(self) -> str:
@@ -57,7 +62,7 @@ class BasicSerializable:
 
     @classmethod
     def from_string(cls: Type[TSerializable], string: str) -> TSerializable:
-        return cls.from_strings(*list(map(cls.element_func, string.split(cls.sep))))
+        return cls.from_strings(map(cls.element_func, string.split(cls.sep)))
 
     def save(self, filename: str) -> None:
         write_text(self.to_string(), filename)

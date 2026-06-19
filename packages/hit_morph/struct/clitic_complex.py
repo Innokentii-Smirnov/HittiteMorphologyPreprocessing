@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Sequence, TYPE_CHECKING
+from typing import Sequence, TYPE_CHECKING, Iterable
 from numpy import ndarray
 from library.serializable import Serializable, SerializableDict
 from .morpholex import Morpholex
@@ -17,7 +17,9 @@ class CliticComplex(Serializable):
         return self.morpholex, self.encl_chain
 
     @classmethod
-    def from_strings(cls, morpholex: str, encl_chain: str) -> CliticComplex:
+    def from_strings(cls, strings: Iterable[str | None]) -> CliticComplex:
+        morpholex, encl_chain = strings
+        assert isinstance(morpholex, str)
         return cls(
             Morpholex.from_string(morpholex),
             EnclChain.from_string(encl_chain) if encl_chain is not None else None

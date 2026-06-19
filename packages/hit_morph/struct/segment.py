@@ -131,25 +131,26 @@ class Segment(Serializable):
         self.final_lemma, self.final_label, self.final_selections)
     
     @classmethod
-    def from_strings(cls,
-                     transcription: str,
-                     transliteration: str,
-                     lang: str,
-                     predet: Optional[str],
-                     postdet: Optional[str],
-                     old_selections: str,
-                     old_options: str,
-                     idx: str,
-                     new_trans: str,
-                     new_selections: str,
-                     new_options: str,
-                     pred_lemma: Optional[str],
-                     pred_label: Optional[str],
-                     pred_selections: str,
-                     final_lemma: Optional[str],
-                     final_label: Optional[str],
-                     final_selections: str,
-                     pred_lemmata: Optional[str] = None) -> Segment:
+    def from_strings(cls, strings: Iterable[str | None]) -> Segment:
+
+        (transcription, transliteration, lang, predet,
+        postdet, old_selections, old_options,
+        idx, new_trans, new_selections, new_options,
+        pred_lemma, pred_label, pred_selections, final_lemma,
+        final_label, final_selections, pred_lemmata) = strings
+
+        assert transcription is not None
+        assert transliteration is not None
+        assert lang is not None
+        assert old_selections is not None
+        assert old_options is not None
+        assert idx is not None
+        assert new_trans is not None
+        assert new_selections is not None
+        assert new_options is not None
+        assert pred_selections is not None
+        assert final_selections is not None
+
         return cls(transcription, transliteration, lang, predet, postdet,
                    StringList.from_string(old_selections), CliticComplexDict.from_string(old_options),
                    int(idx), new_trans,
