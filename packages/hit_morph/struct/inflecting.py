@@ -41,5 +41,5 @@ class Inflecting(Serializable):
     def from_strings(cls, gramm_forms: str) -> Inflecting:
         return cls(StringStringDict.from_string(gramm_forms))
     
-    def compute(self) -> None:
-        self.gramm_forms = parse_form(self.gramm_forms)
+    # def compute(self) -> None:
+    #     self.gramm_forms = parse_form(self.gramm_forms)
