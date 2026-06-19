@@ -347,4 +347,4 @@ class Segment(Serializable):
         misc['Postdet'] = self.postdet
       return misc
 
-missing = set[tuple[Segment, SentenceMetadata]]()
+missing = set[tuple[Segment, 'SentenceMetadata']]()
