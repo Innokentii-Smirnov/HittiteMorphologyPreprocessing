@@ -15,6 +15,7 @@ from .selection import Selection, SelectionList
 from gen_morph.exceptions import CannotParseSelection
 if TYPE_CHECKING:
   from .sentence import Sentence, SentenceMetadata
+from library.serializable import SerializableDict
 
 def get_lang(trans: Tag) -> str:
     if (l := trans.sGr) is not None and l.text != '':
@@ -109,7 +110,9 @@ class Segment(Serializable):
     position: int
 
     def get_elements(self) -> tuple[str, str, str, Optional[str], Optional[str], StringList,
-                                    CliticComplexDict, int, str, StringList, CliticComplexDict,
+                                    SerializableDict[str, CliticComplex],
+                                    int, str, StringList,
+                                    SerializableDict[str, CliticComplex],
                                     Optional[str], Optional[str], StringList,
                                     Optional[str], Optional[str], StringList,
                                     StringList]:
@@ -121,7 +124,9 @@ class Segment(Serializable):
         self.pred_lemmata)
     
     def __tuple__(self) -> tuple[str, str, str, Optional[str], Optional[str], StringList,
-                                    CliticComplexDict, str, StringList, CliticComplexDict,
+                                    SerializableDict[str, CliticComplex],
+                                    str, StringList,
+                                    SerializableDict[str, CliticComplex],
                                     Optional[str], Optional[str], StringList,
                                     Optional[str], Optional[str], StringList]:
         return (self.exponent, self.translit, self.lang, self.predet, self.postdet,
@@ -166,11 +171,11 @@ class Segment(Serializable):
                  predet: Optional[str],
                  postdet: Optional[str],
                  old_selections: StringList,
-                 old_options: CliticComplexDict,
+                 old_options: SerializableDict[str, CliticComplex],
                  idx: int,
                  new_trans: str,
                  new_selections: StringList,
-                 new_options: CliticComplexDict,
+                 new_options: SerializableDict[str, CliticComplex],
                  pred_lemma: Optional[str],
                  pred_label: Optional[str],
                  pred_selections: StringList,

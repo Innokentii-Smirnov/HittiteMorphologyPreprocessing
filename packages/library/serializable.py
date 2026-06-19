@@ -94,7 +94,6 @@ class SerializableList[T](BasicSerializable, list[T]):
     
 TKey = TypeVar('TKey')
 TValue = TypeVar('TValue')
-TSerializableDict = TypeVar('TSerializableDict', bound='SerializableDict')
 
 class SerializableDict[TKey, TValue](BasicSerializable, dict[TKey, TValue]):
     separator = ' \u2192 '
@@ -112,8 +111,8 @@ class SerializableDict[TKey, TValue](BasicSerializable, dict[TKey, TValue]):
         return [self.separator.join([to_string(key), to_string(value)]) for key, value in self.items()]
 
     @classmethod
-    def from_string(cls: Type[TSerializableDict], string: str) -> TSerializableDict:
-        d: TSerializableDict = cls()
+    def from_string(cls, string: str) -> SerializableDict[TKey, TValue]:
+        d: SerializableDict[TKey, TValue] = cls()
         if string != '':
             for elem in string.split(cls.sep):
                 str_key, str_value = elem.split(cls.separator, 1)

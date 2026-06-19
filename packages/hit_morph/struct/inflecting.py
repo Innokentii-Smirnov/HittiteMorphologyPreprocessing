@@ -4,7 +4,7 @@ from library.exceptions import InvalidOperationException, MissingKeyException
 from gen_morph.exceptions import CannotParseFormSet, CannotParseGrammForm
 from hit_morph import corrections as corrs
 from collections.abc import Iterable
-from library.serializable import Serializable, StringStringDict
+from library.serializable import Serializable, StringStringDict, SerializableDict
 import re
 sep = re.compile(r'\} *\{')
 
@@ -31,10 +31,10 @@ def parse_form(form: str | None) -> StringStringDict:
 
 class Inflecting(Serializable):
 
-    def __init__(self, gramm_forms: StringStringDict):
+    def __init__(self, gramm_forms: SerializableDict[str | None, str | None]):
         self.gramm_forms = gramm_forms
 
-    def get_elements(self) -> tuple[StringStringDict]:
+    def get_elements(self) -> tuple[SerializableDict[str | None, str | None]]:
         return self.gramm_forms,
 
     @classmethod
