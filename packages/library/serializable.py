@@ -117,11 +117,11 @@ class SerializableDict[TKey, TValue](BasicSerializable, dict[TKey, TValue]):
                 d[key] = value
         return d
 
-class StringList(SerializableList[str | None]):
+class StringList(SerializableList[str]):
 
     @staticmethod
-    def get_element(string: str) -> str | None:
-      return from_string(string)
+    def get_element(string: str) -> str:
+      return string
 
 class StringStringDict(SerializableDict[str | None, str | None]):
 
