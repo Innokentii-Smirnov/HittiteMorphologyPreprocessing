@@ -22,7 +22,7 @@ class Corrector:
     def __call__(self, item: T) -> T:
         return self.process_single(item)
 
-def update_corr(to_update: str, erroneous: list[str], remove=True, other=False):
+def update_corr(to_update: str, erroneous: list[str], remove: bool = True, other: bool = False) -> None:
     source = 'Corrections for ' + to_update
     target = source
     if other:

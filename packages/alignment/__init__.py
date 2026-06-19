@@ -10,13 +10,13 @@ def string_length(string: str) -> int:
             length += 1
     return length
 
-def pad(string: str, target: int):
+def pad(string: str, target: int) -> str:
     return string + (target - string_length(string)) * " "
 
-def sep(k: int):
+def sep(k: int) -> str:
     return '\n' + ' \n' * k
 
-def subarr_to_str(arrays, start, end) -> str:
+def subarr_to_str(arrays: Sequence[Sequence[str]], start: int, end: int) -> str:
     return '\n'.join('  '.join(array[start:end]) for array in arrays)
 
 def align(arrays: Sequence[Sequence[str]]) -> str:

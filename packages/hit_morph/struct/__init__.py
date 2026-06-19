@@ -1,7 +1,6 @@
 import re
-from collections.abc import Iterable
 
-def parse_lemma(lemma):
+def parse_lemma(lemma: str) -> tuple[str, str]:
     if m := re.match(r'(\D+)(\d+)', lemma):
         stem, index = m.groups()
     else:

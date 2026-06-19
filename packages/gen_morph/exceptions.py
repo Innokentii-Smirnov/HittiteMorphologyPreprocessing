@@ -1,9 +1,11 @@
 class ParsingError(ValueError):
+
+    arg_type = 'argument'
     
     def __init__(self, argument: str):
         self.argument = argument
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Cannot parse {self.arg_type}: '{self.argument}'"
 
 class CannotParseStemClass(ParsingError):
@@ -44,6 +46,6 @@ class SecondaryParsingError(Exception):
     def __init__(self, parsing_error: ParsingError):
         self.parsing_error = parsing_error
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.description + str(self.parsing_error)
 

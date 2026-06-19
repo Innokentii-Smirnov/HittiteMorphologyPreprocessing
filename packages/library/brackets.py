@@ -4,13 +4,13 @@ def in_braces(s: str) -> bool:
 def in_angles(s: str) -> bool:
     return s.startswith('<') and s.endswith('>')
 
-def debrace(s: str):
+def debrace(s: str) -> str:
     assert s.startswith('{') and s.endswith('}')
     ans = s[1:-1]
     return ans
 
 def find_with_brack_balance(string: str, symbol: str,
-                                 opening: str, closing: str):
+                                 opening: str, closing: str) -> list[int]:
     results = []
     balance = 0
     for i, x in enumerate(string):
@@ -23,5 +23,5 @@ def find_with_brack_balance(string: str, symbol: str,
                 results.append(i)
     return results
 
-def enquote(x: str):
+def enquote(x: str) -> str:
     return "'"+x+"'"
