@@ -35,7 +35,7 @@ class Document(SerializableList):
         return list(analysis.encl_chain for analysis in self.clitic_complexes 
         if analysis.encl_chain is not None)
     
-    def select_lemma_by_log_probs(self, log_probs: dict, vocabs: dict[str, dict[str, int]]) -> None:
+    def select_lemma_by_log_probs(self, log_probs: dict, vocabs: dict[str, dict[str | None, int]]) -> None:
         attrs = sorted(log_probs)
         for i, sentence in tqdm(list(enumerate(self))):
             for j, segment in enumerate(sentence):
