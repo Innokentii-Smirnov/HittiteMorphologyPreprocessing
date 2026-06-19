@@ -29,7 +29,7 @@ class BasicSerializable:
 
     sep = '%'
 
-    def get_elements(self) -> Sequence:
+    def get_elements(self) -> Sequence[object]:
         raise NotImplementedError
     
     def __tuple__(self) -> tuple:

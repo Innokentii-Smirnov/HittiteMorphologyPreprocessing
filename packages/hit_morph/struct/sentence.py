@@ -1,12 +1,12 @@
 from __future__ import annotations
-from typing import Iterable
+from typing import Iterable, Iterator
 from library.serializable import Serializable, SerializableList
 from .segment import Segment
 from bs4 import Tag
 from hit_morph.check.wordform import check_wordform, Result
 from alignment import align
 
-class SegmentList(SerializableList):
+class SegmentList(SerializableList[Segment]):
     sep = ' \n\n'
     get_element = Segment.from_string
     
@@ -98,7 +98,7 @@ class Sentence(Serializable):
                 raise
         return cls(metadata, segments)
     
-    def __iter__(self) -> Iterable[Segment]:
+    def __iter__(self) -> Iterator[Segment]:
         return iter(self.segments)
     
     def __len__(self) -> int:

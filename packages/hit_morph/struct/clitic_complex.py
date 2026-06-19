@@ -44,7 +44,7 @@ class CliticComplex(Serializable):
             'simple_label': self.morpholex.simple_label
         }
     
-    def score(self, log_probs_dict: dict[str, ndarray], vocabs: dict[str, dict[str, int]]) -> float:
+    def score(self, log_probs_dict: dict[str, ndarray], vocabs: dict[str, dict[str | None, int]]) -> float:
         score = 0.0
         for attr in log_probs_dict:
             value = self.attrs[attr]

@@ -41,6 +41,6 @@ class Selection(Serializable):
         return string
     
 
-class SelectionList(SerializableList):
+class SelectionList(SerializableList[Selection]):
     sep = ' '
     get_element = Selection.from_string

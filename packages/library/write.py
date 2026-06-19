@@ -1,12 +1,12 @@
 from typing import Iterable
 from . import get_file_name as get_name
 
-def write_dict(d: dict, file_name: str, mode: str = 'w') -> None:
+def write_dict(d: dict[object, object], file_name: str, mode: str = 'w') -> None:
     with open(get_name(file_name), mode, encoding='utf-8') as fout:
-        for key, value in d:
+        for key, value in d.items():
             fout.write(str(key) + '\t' + str(value) + '\n')
 
-def write_list(l: Iterable, file_name: str, mode: str = 'w') -> None:
+def write_list(l: Iterable[object], file_name: str, mode: str = 'w') -> None:
     with open(get_name(file_name), mode, encoding='utf-8') as fout:
         for item in l:
             fout.write(str(item) + '\n')

@@ -2,7 +2,7 @@ import os
 from contextlib import AbstractContextManager
 from types import TracebackType
 
-class DM(AbstractContextManager):
+class DM(AbstractContextManager[None, None]):
 
     def __init__(self, direct: str):
         self.direct = direct

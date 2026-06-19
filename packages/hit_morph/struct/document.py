@@ -7,14 +7,14 @@ from itertools import groupby
 from collections import Counter
 from library.serializable import SerializableList
 from itertools import chain
-from numpy import inf
+from numpy import inf, ndarray
 from tqdm.auto import tqdm
 from more_itertools import one
 from udapi.core.document import Document as UDDocument
 from udapi.core.node import Node
 from library.iterable import group_by
 
-class Document(SerializableList):
+class Document(SerializableList[Sentence]):
     sep = '\n\n***\n'
     get_element = Sentence.from_string
 
@@ -35,7 +35,7 @@ class Document(SerializableList):
         return list(analysis.encl_chain for analysis in self.clitic_complexes 
         if analysis.encl_chain is not None)
     
-    def select_lemma_by_log_probs(self, log_probs: dict, vocabs: dict[str, dict[str | None, int]]) -> None:
+    def select_lemma_by_log_probs(self, log_probs: dict[str, list[ndarray]], vocabs: dict[str, dict[str | None, int]]) -> None:
         attrs = sorted(log_probs)
         for i, sentence in tqdm(list(enumerate(self))):
             for j, segment in enumerate(sentence):
