@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import Optional, TYPE_CHECKING
 from library.serializable import Serializable
 if TYPE_CHECKING:
@@ -10,7 +11,9 @@ class Morpholex(Serializable):
     segment: 'Segment'
     clitic_complex: 'CliticComplex'
 
-    def __init__(self, lemma: str, gloss: str,
+    def __init__(self,
+                 lemma: str | None,
+                 gloss: str | None,
                  gramm_form: str | None,
                  stem_class: str | None,
                  det: str | None,
@@ -31,7 +34,7 @@ class Morpholex(Serializable):
         return
     
     @classmethod
-    def copy(cls, other, gramm_form: str | None):
+    def copy(cls, other: Morpholex, gramm_form: str | None) -> Morpholex:
         return cls(other.lemma, other.gloss, gramm_form, other.stem_class, other.det, other.upos,
         other.relators, other.attached_enclitics_tag, other._exponent)
     
@@ -45,7 +48,7 @@ class Morpholex(Serializable):
                      stem_class: str, det: str, upos: str,
                      relators: Optional[str] = None,
                      attached_enclitics_tag: Optional[str] = None,
-                     exponent: Optional[str] = None):
+                     exponent: Optional[str] = None) -> Morpholex:
         return cls(lemma, gloss, gramm_form, stem_class, det, upos, relators, attached_enclitics_tag, exponent)
 
     @property
@@ -53,7 +56,7 @@ class Morpholex(Serializable):
         return self.gramm_form
     
     @xpos.setter
-    def xpos(self, value: str):
+    def xpos(self, value: str) -> None:
         self.gramm_form = value
 
     @property
@@ -61,7 +64,7 @@ class Morpholex(Serializable):
         return self.segment.exponent
     
     @form.setter
-    def form(self, value: str):
+    def form(self, value: str) -> None:
         self.segment.exponent = value
 
     @property
@@ -95,6 +98,6 @@ class Morpholex(Serializable):
             return self.segment.exponent
     
     @exponent.setter
-    def exponent(self, value: str):
+    def exponent(self, value: str) -> None:
         self._exponent = value
     

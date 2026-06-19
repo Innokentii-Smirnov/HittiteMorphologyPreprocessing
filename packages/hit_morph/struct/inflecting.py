@@ -1,3 +1,4 @@
+from __future__ import annotations
 from library.brackets import debrace, in_braces
 from library.exceptions import InvalidOperationException, MissingKeyException
 from gen_morph.exceptions import CannotParseFormSet, CannotParseGrammForm
@@ -37,8 +38,8 @@ class Inflecting(Serializable):
         return self.gramm_forms,
 
     @classmethod
-    def from_strings(cls, gramm_forms: str):
+    def from_strings(cls, gramm_forms: str) -> Inflecting:
         return cls(StringStringDict.from_string(gramm_forms))
     
-    def compute(self):
+    def compute(self) -> None:
         self.gramm_forms = parse_form(self.gramm_forms)

@@ -1,19 +1,23 @@
-from typing import Sequence
+from __future__ import annotations
+from typing import Sequence, TYPE_CHECKING
 from numpy import ndarray
 from library.serializable import Serializable, SerializableDict
 from .morpholex import Morpholex
 from .encl_chain import EnclChain
 from ..parsing.analysis import parse_analysis
 from .selection import Selection
+if TYPE_CHECKING:
+  from .segment import Segment
 
 class CliticComplex(Serializable):
     sep = '\t'
+    segment: 'Segment'
 
     def get_elements(self) -> tuple[Morpholex, EnclChain | None]:
         return self.morpholex, self.encl_chain
 
     @classmethod
-    def from_strings(cls, morpholex: str, encl_chain: str):
+    def from_strings(cls, morpholex: str, encl_chain: str) -> CliticComplex:
         return cls(
             Morpholex.from_string(morpholex),
             EnclChain.from_string(encl_chain) if encl_chain is not None else None
@@ -27,7 +31,7 @@ class CliticComplex(Serializable):
             self.encl_chain.clitic_complex = self
         self.assign_attributes()
     
-    def assign_attributes(self):
+    def assign_attributes(self) -> None:
         self.attrs = {
             'lemma': self.morpholex.lemma,
             'upos': self.morpholex.upos,
@@ -52,7 +56,7 @@ class CliticComplex(Serializable):
         return score
 
     @classmethod
-    def from_analysis(cls, analysis: str):
+    def from_analysis(cls, analysis: str) -> CliticComplex:
         morpholex, encl_chain = parse_analysis(analysis)
         return cls(morpholex, encl_chain)
 
@@ -90,7 +94,7 @@ class CliticComplex(Serializable):
         else:
             return None
 
-class CliticComplexDict(SerializableDict[str | None, CliticComplex]):
+class CliticComplexDict(SerializableDict[str, CliticComplex]):
     sep = '\n'
     get_key = lambda string: string
     get_value = CliticComplex.from_string

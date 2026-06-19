@@ -1,4 +1,4 @@
-from typing import Callable, TypeVar
+from typing import Callable, TypeVar, Sequence
 from functools import reduce
 from itertools import chain
 from collections.abc import Iterable
@@ -27,10 +27,12 @@ def group_by_many(func: Callable[[TValue], Iterable[TKey]], iterable: Iterable[T
             d[key].append(item)
     return d
 
-def modify_values_key(func, d1: dict[object, list[object]]):
+TResult = TypeVar('TResult')
+
+def modify_values_key(func: Callable[[TKey, list[TValue]], TResult], d1: dict[TKey, list[TValue]]) -> dict[TKey, TResult]:
     return {key: func(key, values) for key, values in d1.items()}
 
-def modify_values(func, d1: dict[object, list[object]]):
+def modify_values(func: Callable[[list[TValue]], TResult], d1: dict[TKey, list[TValue]]) -> dict[TKey, TResult]:
     return {key: func(values) for key, values in d1.items()}
 
 def modify_keys(func: Callable[[str], str],
@@ -50,13 +52,18 @@ def count(func: Callable[[T], bool], iterable: Iterable[T]) -> int:
 def part(func: Callable[[T], bool], iterable: Iterable[T]) -> float:
     return count(func, iterable) / ilen(iterable)
 
-def composition(func1: Callable, func2: Callable):
+TInitial = TypeVar('TInitial')
+TIntermediate = TypeVar('TIntermediate')
+TFinal = TypeVar('TFinal')
+
+def composition(func1: Callable[[TInitial], TIntermediate],
+                func2: Callable[[TIntermediate], TFinal]) -> Callable[[TInitial], TFinal]:
     return lambda x: func2(func1(x))
 
-def compone(*funcs: Callable[[object], object]): 
+def compone(*funcs: Callable[[object], object]) -> Callable[[object], object]:
     return reduce(composition, funcs)
 
-def pi(i: int):
+def pi(i: int) -> Callable[[Iterable[Sequence[T]]], list[T]]:
     return lambda iterable: list(
         map(lambda x: x[i],
         iterable)

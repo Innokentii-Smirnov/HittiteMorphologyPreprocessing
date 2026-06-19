@@ -1,3 +1,5 @@
+from __future__ import annotations
+from typing import Iterable
 from library.serializable import Serializable, SerializableList
 from .segment import Segment
 from bs4 import Tag
@@ -21,7 +23,7 @@ class SentenceMetadata(Serializable):
         return self.text_group, self.text_name, self.lines, self.langs
     
     @classmethod
-    def from_strings(cls, text_group: str, text_name: str, lines: str, langs: str):
+    def from_strings(cls, text_group: str, text_name: str, lines: str, langs: str) -> SentenceMetadata:
         return cls(text_group, text_name, lines, langs)
     
     def __init__(self, text_group: str, text_name: str, lines: str, langs: str):
@@ -31,7 +33,7 @@ class SentenceMetadata(Serializable):
         self.langs = langs
     
     @classmethod
-    def from_tag(cls, sent_tag: Tag):
+    def from_tag(cls, sent_tag: Tag) -> SentenceMetadata:
         text_group = sent_tag['text_group']
         assert isinstance(text_group, str)
         text_name = sent_tag['text_name']
@@ -48,7 +50,7 @@ class SentenceMetadata(Serializable):
         )
         return metadata
     
-    def __str__(self):
+    def __str__(self) -> str:
         return ' '.join([self.text_group, self.text_name, self.lines])
 
 class Sentence(Serializable):
@@ -58,10 +60,10 @@ class Sentence(Serializable):
         return self.metadata, self.segments
     
     @classmethod
-    def from_strings(cls, metadata: str, segments: str):
+    def from_strings(cls, metadata: str, segments: str) -> Sentence:
         return cls(SentenceMetadata.from_string(metadata), SegmentList.from_string(segments))
 
-    def assign_numbers_to_segments(self):
+    def assign_numbers_to_segments(self) -> None:
         for i, segment in enumerate(self.segments):
             segment.sentence = self
             segment.position = i
@@ -72,7 +74,7 @@ class Sentence(Serializable):
         self.assign_numbers_to_segments()
     
     @classmethod
-    def from_tag(cls, sent_tag: Tag):
+    def from_tag(cls, sent_tag: Tag) -> Sentence:
         metadata = SentenceMetadata.from_tag(sent_tag)
         segments = SegmentList()
         tags = sent_tag.find_all('w')
@@ -88,13 +90,13 @@ class Sentence(Serializable):
                 raise
         return cls(metadata, segments)
     
-    def __iter__(self):
+    def __iter__(self) -> Iterable[Segment]:
         return iter(self.segments)
     
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.segments)
     
-    def __getitem__(self, idx: int):
+    def __getitem__(self, idx: int) -> Segment:
         return self.segments[idx]
         
     def __str__(self) -> str:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 from itertools import chain
-from typing import Optional, Sequence, TYPE_CHECKING
+from typing import Optional, Sequence, TYPE_CHECKING, Iterable, Iterator, TypeVar, Callable
+from itertools import chain
 from bs4 import Tag
 from warnings import warn
 from gen_morph.exceptions import CannotParseWordform
@@ -62,13 +63,12 @@ def get_selections(wordform: Tag, prefix: str) -> StringList:
                 pass
     return selections
 
-def add_index(index: int):
+T = TypeVar('T')
+def add_index(index: int) -> Callable[[T], tuple[int, T]]:
     return lambda x: (index, x)
 add_one = add_index(1)
 add_two = add_index(2)
 
-from typing import TypeVar
-from itertools import chain
 TKey = TypeVar('TKey')
 TValue = TypeVar('TValue')
 class DoubleDictionary[TKey, TValue]:
@@ -85,7 +85,7 @@ class DoubleDictionary[TKey, TValue]:
         else:
             raise ValueError(index)
     
-    def __setitem__(self, long_key: tuple[int, TKey], value: TValue):
+    def __setitem__(self, long_key: tuple[int, TKey], value: TValue) -> None:
         index, key = long_key
         if index == 1:
             self.d1[key] = value
@@ -94,10 +94,10 @@ class DoubleDictionary[TKey, TValue]:
         else:
             raise ValueError(index)
     
-    def __iter__(self):
+    def __iter__(self) -> Iterable[tuple[int, TKey]]:
         return chain(map(add_one, self.d1.keys()), map(add_two, self.d2.keys()))
     
-    def items(self):
+    def items(self) -> Iterable[tuple[tuple[int, TKey], TValue]]:
         return chain(
             map(lambda x: (add_one(x[0]), x[1]), self.d1.items()),
             map(lambda x: (add_two(x[0]), x[1]), self.d2.items()),
@@ -106,6 +106,7 @@ class DoubleDictionary[TKey, TValue]:
 class Segment(Serializable):
     sep = ';\n'
     sentence: Sentence
+    position: int
 
     def get_elements(self) -> tuple[str, str, str, Optional[str], Optional[str], StringList,
                                     CliticComplexDict, int, str, StringList, CliticComplexDict,
@@ -119,7 +120,10 @@ class Segment(Serializable):
         self.final_lemma, self.final_label, self.final_selections,
         self.pred_lemmata)
     
-    def __tuple__(self):
+    def __tuple__(self) -> tuple[str, str, str, Optional[str], Optional[str], StringList,
+                                    CliticComplexDict, str, StringList, CliticComplexDict,
+                                    Optional[str], Optional[str], StringList,
+                                    Optional[str], Optional[str], StringList]:
         return (self.exponent, self.translit, self.lang, self.predet, self.postdet,
         self.old_selections, self.old_options,
         self.new_trans, self.new_selections, self.new_options,
@@ -145,7 +149,7 @@ class Segment(Serializable):
                      final_lemma: Optional[str],
                      final_label: Optional[str],
                      final_selections: str,
-                     pred_lemmata: Optional[str] = None):
+                     pred_lemmata: Optional[str] = None) -> Segment:
         return cls(transcription, transliteration, lang, predet, postdet,
                    StringList.from_string(old_selections), CliticComplexDict.from_string(old_options),
                    int(idx), new_trans,
@@ -198,7 +202,7 @@ class Segment(Serializable):
     def analyses(self) -> list[CliticComplex]:
         return list(chain(self.old_options.values(), self.new_options.values()))
 
-    def mark_morphs(self):
+    def mark_morphs(self) -> None:
         for analysis in self.analyses:
             analysis.segment = self
             analysis.morpholex.segment = self
@@ -207,7 +211,7 @@ class Segment(Serializable):
             analysis.assign_attributes()
 
     @classmethod
-    def from_tag(cls, wordform: Tag):
+    def from_tag(cls, wordform: Tag) -> Segment:
 
         # Exponent
         transcription = wordform.attrs.get('trans', '_')
@@ -236,7 +240,7 @@ class Segment(Serializable):
         None, None, StringList(),
         StringList())
     
-    def actual_selections(self, verbose=True):
+    def actual_selections(self, verbose: bool = True) -> Iterator[str]:
         for selected in self.old_selections:
             if selected in self.old_options:
                 yield selected
@@ -315,7 +319,7 @@ class Segment(Serializable):
         return text
     
     @property
-    def next(self):
+    def next(self) -> Segment | None:
         idx = self.position + 1
         if idx < len(self.sentence):
             return self.sentence[idx]
@@ -323,7 +327,7 @@ class Segment(Serializable):
             return None
     
     @property
-    def prev(self):
+    def prev(self) -> Segment | None:
         idx = self.position - 1
         if idx > 0:
             return self.sentence[idx]

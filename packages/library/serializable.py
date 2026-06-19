@@ -1,10 +1,10 @@
 from __future__ import annotations
 from library.read import read_text
 from library.write import write_text
-from typing import TypeVar, Sequence
+from typing import TypeVar, Sequence, Type
 from functools import partial
 
-def to_string(x):
+def to_string(x: object) -> str:
     if isinstance(x, Serializable):
         return x.to_string()
     elif isinstance(x, str):
@@ -17,6 +17,8 @@ def from_string(string: str) -> str | None:
     return None
   return string
 
+TSerializable = TypeVar('TSerializable', bound='BasicSerializable')
+
 class BasicSerializable:
 
     element_func = lambda x: x if x != 'None' else None
@@ -28,17 +30,23 @@ class BasicSerializable:
     def __tuple__(self) -> tuple:
         return tuple(self.get_elements())
     
-    def __eq__(self, other) -> bool:
-        return self.__tuple__() == other.__tuple__()
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, BasicSerializable):
+            return self.__tuple__() == other.__tuple__()
+        return False
 
-    def __lt__(self, other) -> bool:
-        return self.__tuple__().__lt__(other.__tuple__())
+    def __lt__(self, other: object) -> bool:
+        if isinstance(other, BasicSerializable):
+            return self.__tuple__().__lt__(other.__tuple__())
+        return False
 
-    def __gt__(self, other) -> bool:
-        return self.__tuple__().__gt__(other.__tuple__())
+    def __gt__(self, other: object) -> bool:
+        if isinstance(other, BasicSerializable):
+            return self.__tuple__().__gt__(other.__tuple__())
+        return False
 
     @classmethod
-    def from_strings(cls, *strings):
+    def from_strings(cls: Type[TSerializable], *strings) -> TSerializable:
         raise NotImplementedError
 
     def to_string(self) -> str:
@@ -48,22 +56,23 @@ class BasicSerializable:
         return self.to_string()
 
     @classmethod
-    def from_string(cls, string: str):
+    def from_string(cls: Type[TSerializable], string: str) -> TSerializable:
         return cls.from_strings(*list(map(cls.element_func, string.split(cls.sep))))
 
-    def save(self, filename: str):
+    def save(self, filename: str) -> None:
         write_text(self.to_string(), filename)
 
     @classmethod
-    def load(cls, filename: str):
+    def load(cls: Type[TSerializable], filename: str) -> TSerializable:
         return cls.from_string(read_text(filename))
 
 class Serializable(BasicSerializable):
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return self.__tuple__().__hash__()
     
 T = TypeVar('T')
+TSerializableList = TypeVar('TSerializableList', bound='SerializableList')
 
 class SerializableList[T](BasicSerializable, list[T]):
     
@@ -75,11 +84,12 @@ class SerializableList[T](BasicSerializable, list[T]):
         return self
 
     @classmethod
-    def from_string(cls, string: str):
+    def from_string(cls: Type[TSerializableList], string: str) -> TSerializableList:
         return cls(map(cls.get_element, string.split(cls.sep))) if string != '' else cls()
     
 TKey = TypeVar('TKey')
 TValue = TypeVar('TValue')
+TSerializableDict = TypeVar('TSerializableDict', bound='SerializableDict')
 
 class SerializableDict[TKey, TValue](BasicSerializable, dict[TKey, TValue]):
     separator = ' \u2192 '
@@ -97,8 +107,8 @@ class SerializableDict[TKey, TValue](BasicSerializable, dict[TKey, TValue]):
         return [self.separator.join([to_string(key), to_string(value)]) for key, value in self.items()]
 
     @classmethod
-    def from_string(cls, string: str):
-        d: SerializableDict = cls()
+    def from_string(cls: Type[TSerializableDict], string: str) -> TSerializableDict:
+        d: TSerializableDict = cls()
         if string != '':
             for elem in string.split(cls.sep):
                 str_key, str_value = elem.split(cls.separator, 1)
