@@ -54,6 +54,7 @@ class Document(SerializableList[Sentence]):
                     )
                     segment.final_lemma = clitic_group.morpholex.lemma
                     segment.final_label = clitic_group.label
+                    segment.final_selections.append(clitic_group.key)
                 else:
                     segment.final_lemma = None
                     segment.final_label = None

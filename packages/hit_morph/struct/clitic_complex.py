@@ -12,6 +12,7 @@ if TYPE_CHECKING:
 class CliticComplex(Serializable):
     sep = '\t'
     segment: 'Segment'
+    key: str
 
     def get_elements(self) -> tuple[Morpholex, EnclChain | None]:
         return self.morpholex, self.encl_chain

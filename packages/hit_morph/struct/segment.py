@@ -203,8 +203,8 @@ class Segment(Serializable):
         self.final_label = final_label
         self.final_selections = final_selections
         self.pred_lemmata = pred_lemmata or StringList()
-        self.mark_morphs()
         self.options = DoubleDictionary(old_options, new_options)
+        self.mark_morphs()
 
     @property
     def analyses(self) -> list[CliticComplex]:
@@ -217,6 +217,8 @@ class Segment(Serializable):
             if analysis.encl_chain is not None:
                 analysis.encl_chain.segment = self
             analysis.assign_attributes()
+        for (index, key), option in self.options.items():
+            option.key = key
 
     @classmethod
     def from_tag(cls, wordform: Tag) -> Segment:
