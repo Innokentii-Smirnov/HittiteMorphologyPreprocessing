@@ -1,4 +1,5 @@
-from bs4 import PageElement, Tag, NavigableString
+from bs4 import Tag
+from bs4.element import PageElement, NavigableString
 from collections.abc import Iterable
 import re
 
