@@ -558,23 +558,3 @@ len(no_boundary)
 
 os.chdir(direct)
 doc.save('{0}-lemmata.txt'.format(CORPUS))
-
-
-# ## Analytics
-
-# In[49]:
-
-
-s = set(segment for segment in doc.segments if segment.exponent.islower() and not segment.exponent[0].isdigit() and segment.lang == 'sux')
-
-
-# In[50]:
-
-
-l = sorted(s, key=repr)
-
-
-# In[51]:
-
-
-[(i, x.exponent) for i, x in enumerate(l)]
