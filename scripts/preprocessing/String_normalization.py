@@ -273,7 +273,7 @@ for i in range(0, 10):
 
 
 direct = path.join(outdir, 'Extracted')
-os.mkdir(direct)
+os.makedirs(direct, exist_ok=True)
 
 
 # In[42]:
