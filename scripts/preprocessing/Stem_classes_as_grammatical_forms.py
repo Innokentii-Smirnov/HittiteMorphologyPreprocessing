@@ -227,10 +227,6 @@ for clitic_complex in doc.clitic_complexes:
             segment.analyses.append(CliticComplex.from_string(repr(clitic_complex).replace(to_correct, variant)))
         mod.append(segment)
 
-print(len(mod))
-for x in set(mod):
-    print(x, end='\n\n')
-
 
 # ### Second
 
