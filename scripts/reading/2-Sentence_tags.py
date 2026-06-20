@@ -40,7 +40,7 @@ def process_text(text_tag: Tag, xml: BeautifulSoup):
     text_name = text_tag['file']
     #text_name = text_tag.find('AO:Manuscripts').find('AO:TxtPubl').text
 
-    tags = text_tag.find_all(['lb', 'clb', 'parsep', 'w'])
+    tags = text_tag.find_all(['lb', 'clb', 'parsep', 'parsep_dbl', 'w'])
 
     #print(text_name)
     corpus: Tag = xml.corpus
