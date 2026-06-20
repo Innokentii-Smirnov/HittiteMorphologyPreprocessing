@@ -281,23 +281,3 @@ repr(doc) == repr(document)
 
 
 print(len(document))
-
-
-# ### Analytics
-
-# In[36]:
-
-
-s = set(segment for segment in doc.segments if segment.exponent.islower() and not segment.exponent[0].isdigit() and segment.lang == 'sux')
-
-
-# In[37]:
-
-
-l = sorted(s, key=repr)
-
-
-# In[38]:
-
-
-[(i, x.exponent) for i, x in enumerate(l)]
