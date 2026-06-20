@@ -7,7 +7,7 @@ from library.read import read_list
 
 def load_log_probs(filename: str) -> list[ndarray]:
   with open(filename, 'rb') as fin:
-    log_probs = np.load(fin, allow_pickle=True)
+    log_probs: list[ndarray] = np.load(fin, allow_pickle=True)
   return log_probs
 
 def load_all_log_probs(directory: str) -> dict[str, list[ndarray]]:

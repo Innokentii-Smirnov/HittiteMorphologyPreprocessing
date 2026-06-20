@@ -8,7 +8,7 @@ def parse_element(element: PageElement) -> str:
         if element.name == 'd':
             return str(element)
         else:
-            return element.text
+            return element.get_text()
     elif isinstance(element, NavigableString):
         return str(element)
     else:
