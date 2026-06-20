@@ -702,20 +702,6 @@ for node in nodes:
 len(quirky), len(modified)
 
 
-# In[80]:
-
-
-for x in set(quirky):
-    print(x, end='\n\n')
-
-
-# In[81]:
-
-
-for x in set(modified):
-    print(x, end='\n\n')
-
-
 # In[82]:
 
 
