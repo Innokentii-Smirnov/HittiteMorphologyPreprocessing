@@ -32,7 +32,7 @@ class BasicSerializable:
     def get_elements(self) -> Sequence[object]:
         raise NotImplementedError
     
-    def __tuple__(self) -> tuple:
+    def __tuple__(self) -> tuple[object, ...]:
         return tuple(self.get_elements())
     
     def __eq__(self, other: object) -> bool:
