@@ -77,7 +77,6 @@ class Serializable(BasicSerializable):
         return self.__tuple__().__hash__()
     
 T = TypeVar('T')
-TSerializableList = TypeVar('TSerializableList', bound='SerializableList')
 
 class SerializableList[T](BasicSerializable, list[T]):
     
@@ -89,7 +88,7 @@ class SerializableList[T](BasicSerializable, list[T]):
         return self
 
     @classmethod
-    def from_string(cls: Type[TSerializableList], string: str) -> TSerializableList:
+    def from_string(cls, string: str) -> SerializableList[T]:
         return cls(map(cls.get_element, string.split(cls.sep))) if string != '' else cls()
     
 TKey = TypeVar('TKey')

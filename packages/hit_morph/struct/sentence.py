@@ -61,7 +61,7 @@ class SentenceMetadata(Serializable):
 class Sentence(Serializable):
     sep = '#\n\n'
 
-    def get_elements(self) -> tuple[SentenceMetadata, SegmentList]:
+    def get_elements(self) -> tuple[SentenceMetadata, SerializableList[Segment]]:
         return self.metadata, self.segments
     
     @classmethod
@@ -76,7 +76,7 @@ class Sentence(Serializable):
             segment.sentence = self
             segment.position = i
 
-    def __init__(self, metadata: SentenceMetadata, segments: SegmentList):
+    def __init__(self, metadata: SentenceMetadata, segments: SerializableList[Segment]):
         self.metadata = metadata
         self.segments = segments
         self.assign_numbers_to_segments()

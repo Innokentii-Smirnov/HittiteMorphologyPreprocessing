@@ -15,7 +15,7 @@ from .selection import Selection, SelectionList
 from gen_morph.exceptions import CannotParseSelection
 if TYPE_CHECKING:
   from .sentence import Sentence, SentenceMetadata
-from library.serializable import SerializableDict
+from library.serializable import SerializableDict, SerializableList
 
 def get_lang(trans: Tag) -> str:
     if (l := trans.sGr) is not None and l.text != '':
@@ -109,13 +109,14 @@ class Segment(Serializable):
     sentence: Sentence
     position: int
 
-    def get_elements(self) -> tuple[str, str, str, Optional[str], Optional[str], StringList,
+    def get_elements(self) -> tuple[str, str, str, Optional[str], Optional[str],
+                                    SerializableList[str],
                                     SerializableDict[str, CliticComplex],
-                                    int, str, StringList,
+                                    int, str, SerializableList[str],
                                     SerializableDict[str, CliticComplex],
-                                    Optional[str], Optional[str], StringList,
-                                    Optional[str], Optional[str], StringList,
-                                    StringList]:
+                                    Optional[str], Optional[str], SerializableList[str],
+                                    Optional[str], Optional[str], SerializableList[str],
+                                    SerializableList[str]]:
         return (self.exponent, self.translit, self.lang, self.predet, self.postdet,
         self.old_selections, self.old_options, self.idx,
         self.new_trans, self.new_selections, self.new_options,
@@ -123,12 +124,13 @@ class Segment(Serializable):
         self.final_lemma, self.final_label, self.final_selections,
         self.pred_lemmata)
     
-    def __tuple__(self) -> tuple[str, str, str, Optional[str], Optional[str], StringList,
+    def __tuple__(self) -> tuple[str, str, str, Optional[str], Optional[str],
+                                    SerializableList[str],
                                     SerializableDict[str, CliticComplex],
-                                    str, StringList,
+                                    str, SerializableList[str],
                                     SerializableDict[str, CliticComplex],
-                                    Optional[str], Optional[str], StringList,
-                                    Optional[str], Optional[str], StringList]:
+                                    Optional[str], Optional[str], SerializableList[str],
+                                    Optional[str], Optional[str], SerializableList[str]]:
         return (self.exponent, self.translit, self.lang, self.predet, self.postdet,
         self.old_selections, self.old_options,
         self.new_trans, self.new_selections, self.new_options,
@@ -170,19 +172,19 @@ class Segment(Serializable):
                  lang: str,
                  predet: Optional[str],
                  postdet: Optional[str],
-                 old_selections: StringList,
+                 old_selections: SerializableList[str],
                  old_options: SerializableDict[str, CliticComplex],
                  idx: int,
                  new_trans: str,
-                 new_selections: StringList,
+                 new_selections: SerializableList[str],
                  new_options: SerializableDict[str, CliticComplex],
                  pred_lemma: Optional[str],
                  pred_label: Optional[str],
-                 pred_selections: StringList,
+                 pred_selections: SerializableList[str],
                  final_lemma: Optional[str],
                  final_label: Optional[str],
-                 final_selections: StringList,
-                 pred_lemmata: Optional[StringList] = None):
+                 final_selections: SerializableList[str],
+                 pred_lemmata: Optional[SerializableList[str]] = None):
         self.exponent = transcription
         self.translit = transliteration
         self.lang = lang
