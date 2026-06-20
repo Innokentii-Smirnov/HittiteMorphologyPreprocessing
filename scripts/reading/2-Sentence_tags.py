@@ -179,19 +179,6 @@ text = texts[4]
 print(str(text)[:1000])
 
 
-# In[17]:
-
-
-xml = BeautifulSoup('<corpus name="HFR"></corpus>', 'xml')
-process_text(texts[0], xml)
-
-
-# In[18]:
-
-
-print(xml.prettify()[:1000])
-
-
 # ### Multiple files
 
 # In[19]:
