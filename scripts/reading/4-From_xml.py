@@ -132,26 +132,6 @@ for x in sent_tag('w'):
 sent = Sentence.from_tag(sent_tag)
 
 
-# In[13]:
-
-
-sent
-
-
-# In[14]:
-
-
-opt = sent.segments[7].new_options
-opt
-
-
-# In[15]:
-
-
-from hit_morph.struct.clitic_complex import CliticComplexDict
-CliticComplexDict.from_string(repr(opt))
-
-
 # In[16]:
 
 
