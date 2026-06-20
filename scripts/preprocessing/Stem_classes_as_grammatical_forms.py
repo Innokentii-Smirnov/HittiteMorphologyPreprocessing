@@ -11,6 +11,7 @@
 import os
 import sys
 from os import path
+from hit_morph.struct.sentence import Sentence
 
 try:
     from google.colab import drive
@@ -542,14 +543,14 @@ def get_xpos(pos: str, gf: str):
 # In[57]:
 
 
-modified = set()
+modified = list[Sentence]()
 
 for node in doc.wordforms:
     if node.upos is None:
         if node.xpos is None:
             if node.stem_class is not None and not is_class(node.stem_class):
                 node.xpos = node.stem_class
-                modified.add(node.segment.sentence)
+                modified.append(node.segment.sentence)
         if node.xpos is not None:
             gf = preprocess_gramm_form(corr(node.xpos))
             try:
@@ -566,7 +567,7 @@ for node in doc.wordforms:
                 node.upos = struct.upper()
                 node.xpos = gf
             node.feats = decomponed
-            modified.add(node.segment.sentence)
+            modified.append(node.segment.sentence)
 
 
 # In[58]:

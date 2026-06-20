@@ -227,7 +227,7 @@ list((node.upos, node.xpos, node.lemma) for node in nodes if get_form(node) == '
 # In[26]:
 
 
-#for root in set(node.root for node in bygf.get('15.1', [])):
+#for root in list(node.root for node in bygf.get('15.1', [])):
 #    writer.process_tree(root)
 
 
@@ -802,7 +802,7 @@ for node in groups.get(('HURR', 'HURR'), []):
 # In[ ]:
 
 
-roots = set(node.root for node in groups.get(('HURR', 'HURR'), []))
+roots = list(node.root for node in groups.get(('HURR', 'HURR'), []))
 len(roots)
 
 
@@ -899,14 +899,14 @@ for sc, (lang, pos, feats) in sorted(correct, key=lambda sc: tuple(int(x) if x.i
 
 
 from udapi.core.root import Root
-modified = set[Root]()
+modified = list[Root]()
 
 for sc, (lang, pos, feats) in correct:
     nodes = grouped[sc]
     for node in nodes:
         assert node.upos is None
         node.upos = pos.name
-        modified.add(node.root)
+        modified.append(node.root)
 
 len(modified)
 
@@ -936,7 +936,7 @@ for node in grouped.get('38.2', []):
 # In[ ]:
 
 
-roots = sorted(set(node.root for node in grouped['30.10.1']), key=id)
+roots = sorted(list(node.root for node in grouped['30.10.1']), key=id)
 len(roots)
 
 
