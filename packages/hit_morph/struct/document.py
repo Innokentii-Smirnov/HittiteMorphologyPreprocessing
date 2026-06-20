@@ -108,13 +108,16 @@ class Document(SerializableList[Sentence]):
                                        lemma=segment.final_lemma,
                                        xpos=segment.final_label,
                                        misc=segment.misc)
+              node.misc['Selected'] = ' '.join(segment.final_selections)
               words.append(node)
             mwt_form = ' '.join(node.form for node in words)
             mwt = root.create_multiword_token(words, mwt_form)
+            mwt.misc['Selected'] = words[-1].misc['Selected']
           else:
             segment = one(segments)
             node = root.create_child(form=segment.exponent or '_',
                                      lemma=segment.final_lemma,
                                      xpos=segment.final_label,
                                      misc=segment.misc)
+            node.misc['Selected'] = ' '.join(segment.final_selections)
       return document
