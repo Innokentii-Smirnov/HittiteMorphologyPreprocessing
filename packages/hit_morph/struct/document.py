@@ -97,8 +97,19 @@ class Document(SerializableList[Sentence]):
 
     def to_ud_document(self) -> UDDocument:
       document = UDDocument()
+      prev_text_name = None
+      sentence_number = 0
       for sentence in self:
+        text_name = sentence.metadata.text_name
+        if text_name != prev_text_name:
+          sentence_number = 0
+        else:
+          sentence_number += 1
         root = document.create_bundle().create_tree()
+        root.add_comment('text_group = ' + sentence.metadata.text_group.replace('/', '\\'))
+        root.add_comment('text_name = ' + text_name)
+        root.add_comment('sent_num = ' + str(sentence_number))
+        prev_text_name = text_name
         for key, group in groupby(sentence.segments, lambda segment: segment.idx):
           segments = list(group)
           if len(segments) > 1:
