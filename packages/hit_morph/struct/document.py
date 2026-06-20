@@ -104,11 +104,17 @@ class Document(SerializableList[Sentence]):
           if len(segments) > 1:
             words = list[Node]()
             for segment in segments:
-              node = root.create_child(form=segment.exponent or '_', misc=segment.misc)
+              node = root.create_child(form=segment.exponent or '_',
+                                       lemma=segment.final_lemma,
+                                       xpos=segment.final_label,
+                                       misc=segment.misc)
               words.append(node)
             mwt_form = ' '.join(node.form for node in words)
             mwt = root.create_multiword_token(words, mwt_form)
           else:
             segment = one(segments)
-            node = root.create_child(form=segment.exponent or '_', misc=segment.misc)
+            node = root.create_child(form=segment.exponent or '_',
+                                     lemma=segment.final_lemma,
+                                     xpos=segment.final_label,
+                                     misc=segment.misc)
       return document
