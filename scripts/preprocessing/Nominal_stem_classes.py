@@ -342,7 +342,7 @@ print_gfs(errs)
 # In[37]:
 
 
-set((get_form(node), node.upos, node.xpos, node.gloss) for node in bygf['30.12'])
+set((get_form(node), node.upos, node.xpos, node.gloss) for node in bygf.get('30.12', []))
 
 
 # In[38]:
@@ -455,24 +455,6 @@ for node in grouped['29.1.2']:
         node.upos = 'ADJ'
 
 
-# In[52]:
-
-
-writer.process_tree(next(node.root for node in grouped['29.1.2'] if node.upos == 'ADJ'))
-
-
-# In[53]:
-
-
-sum(1 for node in grouped['29.1.2'] if node.upos == 'ADJ')
-
-
-# In[54]:
-
-
-Counter(node.gloss for node in grouped['29.1.2'] if not node.gloss.islower())
-
-
 # ## Modifications
 
 # In[55]:
@@ -529,18 +511,6 @@ Counter((node.gloss, node.misc['Class']) for node in nominals if node.upos == 'N
 for node in nominals:
     if node.upos == 'NOUN' and node.gloss.islower():
         node.upos = 'ADJ'
-
-
-# In[61]:
-
-
-next(node for node in grouped['28.2.1.1'] if node.upos == 'ADJ').segment.sentence
-
-
-# In[62]:
-
-
-sum(1 for node in grouped['1.1.1'] if node.upos == 'ADJ')
 
 
 # ## Errors
@@ -706,20 +676,6 @@ for key, values in groups.items():
     print('{0:10} {1:7} {2:25}'.format(key, str(len(values)), ', '.join(set(node.form if node.form != '_' else
                                                                             "[{0}]".format(node.multiword_token.form)
                                                                             for node in values))))
-
-
-# In[ ]:
-
-
-for node in groups['ACC.SG.C']: #grouped[stem_class]:
-    writer.process_tree(node.root)
-    print()
-
-
-# In[ ]:
-
-
-correct[5]
 
 
 # ## Final analytics

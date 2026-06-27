@@ -96,7 +96,6 @@ c
 
 for node in nodes:
     if node.upos == 'PREP' and node.segment.lang == 'hit':
-        print(node.segment.sentence)
         node.upos = 'DN'
         node.xpos = 'D/L.SG'
         print('***')
@@ -152,12 +151,6 @@ for node in nodes:
         adv = node
         node.xpos = None
 i
-
-
-# In[17]:
-
-
-adv
 
 
 # ## Saving

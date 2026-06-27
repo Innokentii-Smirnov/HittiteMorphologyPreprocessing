@@ -294,12 +294,6 @@ for gf, y in sorted(errs):
                                      ', '.join(list(set(str(get_form(node)) for node in bygf[gf]))[:5])))
 
 
-# In[29]:
-
-
-bygf['CNJ'][0].segment
-
-
 # In[30]:
 
 
@@ -904,7 +898,7 @@ for ec in encl_chains:
         enclitics |= (
             set(zip(ec.exponents.split('='), ec.tags.split('='), strict=True))
         )
-    except ValueError:
+    except (ValueError, AttributeError):
         print(ec)
 print(len(enclitics))
 
@@ -952,22 +946,6 @@ from collections import Counter
 for gf in sorted(gfs):
     print('{0:25} {1:10} {2}'.format(gf, '({0})'.format(len(bygf[gf])),
                                      Counter(e[0] for e in bygf[gf])))
-
-
-# In[109]:
-
-
-for cc in doc.clitic_complexes:
-    if cc.encl_chain and 'mama' in cc.encl_chain.exponents:
-        print(cc.morpholex.segment)
-
-
-# In[110]:
-
-
-for cc in doc.clitic_complexes:
-    if cc.encl_chain and 'yaya' in cc.encl_chain.exponents:
-        print(cc.morpholex.segment)
 
 
 # In[111]:
@@ -1057,18 +1035,6 @@ for ec in encl_chains:
 
 
 [ec.tags for ec in encl_chains if 'RLT.PL' in ec.tags]
-
-
-# In[122]:
-
-
-doc[1000]
-
-
-# In[123]:
-
-
-doc[1001]
 
 
 # ## Final analytics

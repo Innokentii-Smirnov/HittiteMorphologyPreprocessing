@@ -130,24 +130,26 @@ for prep in sorted(set(segment.exponent.split(' ')[0] for segment in preposition
 
 # #### IŠTU
 
-# In[15]:
+if 'IŠ-TU' in lemmata:
+
+    # In[15]:
 
 
-Counter(lemmata['IŠ-TU']['IŠTU'])
+    Counter(lemmata['IŠ-TU']['IŠTU'])
 
 
-# In[16]:
+    # In[16]:
 
 
-lemmata['IŠ-TU'].get('ŠA', [])
+    lemmata['IŠ-TU'].get('ŠA', [])
 
 
-# In[17]:
+    # In[17]:
 
 
-for morph in lemmata['IŠ-TU'].get('ŠA', []):
-    morph.gloss = 'aus'
-    morph.lemma = 'IŠTU'
+    for morph in lemmata['IŠ-TU'].get('ŠA', []):
+        morph.gloss = 'aus'
+        morph.lemma = 'IŠTU'
 
 
 # #### ANA
@@ -175,56 +177,61 @@ for morph in lemmata['A-NA'].get('INA', []):
 
 # #### PA-NI
 
-# In[21]:
+if 'PA-NI' in lemmata:
+
+    # In[21]:
 
 
-Counter(lemmata['PA-NI']['PĀNU'])
+    Counter(lemmata['PA-NI']['PĀNU'])
 
 
-# In[22]:
+    # In[22]:
 
 
-lemmata['PA-NI'].get('1', [])
+    lemmata['PA-NI'].get('1', [])
 
 
-# In[23]:
+    # In[23]:
 
 
-lemmata['PA-NI'].get('PA-NI', [])
+    lemmata['PA-NI'].get('PA-NI', [])
 
 
-# In[24]:
+    # In[24]:
 
 
-for morph in lemmata['PA-NI'].get('1', []) + lemmata['PA-NI'].get('PA-NI', []):
-    morph.lemma = 'PĀNU'
-    morph.gloss = 'vor'
-    morph.xpos = 'PREP'
+    for morph in lemmata['PA-NI'].get('1', []) + lemmata['PA-NI'].get('PA-NI', []):
+        morph.lemma = 'PĀNU'
+        morph.gloss = 'vor'
+        morph.xpos = 'PREP'
 
 
-# In[25]:
+    # In[25]:
 
 
-lemmata['PA-NI'].get('1', []) + lemmata['PA-NI'].get('PA-NI', [])
+    lemmata['PA-NI'].get('1', []) + lemmata['PA-NI'].get('PA-NI', [])
 
 
 # #### ŠA and ŠÀ
 
-# In[26]:
+if 'ŠA' in by_form:
+
+    # In[26]:
 
 
-from itertools import chain
-for x in set(chain.from_iterable(segment.analyses for segment in by_form['ŠA'])):
-    print(x)
-    print()
+    from itertools import chain
+    for x in set(chain.from_iterable(segment.analyses for segment in by_form['ŠA'])):
+        print(x)
+        print()
 
 
 # In[27]:
 
+if 'ŠÀ' in by_form:
 
-for x in set(chain.from_iterable(segment.analyses for segment in by_form['ŠÀ'])):
-    print(x)
-    print()
+    for x in set(chain.from_iterable(segment.analyses for segment in by_form['ŠÀ'])):
+        print(x)
+        print()
 
 
 # #### Continued
